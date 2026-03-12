@@ -5,6 +5,8 @@ const config = [
   { id: "france", name: "PARIS", zone: "Europe/Paris" },
   { id: "japan", name: "TOKYO", zone: "Asia/Tokyo" },
   { id: "australia", name: "SYDNEY", zone: "Australia/Sydney" },
+  { id: "singapore", name: "SINGAPORE", zone: "Asia/Singapore" },
+  { id: "dubai", name: "DUBAI", zone: "Asia/Dubai" },
 ];
 
 let clocks = [];

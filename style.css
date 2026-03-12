@@ -89,13 +89,14 @@ body {
 /* --- CLOCK GRID (TAB 1) --- */
 .clock-grid {
   display: grid;
-  /* Use 1fr on mobile, 2 or 3 cols on desktop */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* Changed auto-fit to auto-fill to prevent stretching on the last row */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
   width: 95%;
   max-width: 1200px;
   margin: 0 auto;
   padding-bottom: 40px;
+  justify-content: center; /* Centers the grid if there is extra space */
 }
 
 .clock-card {
@@ -109,6 +110,10 @@ body {
   align-items: center;
   justify-content: center;
   transition: border-color 0.3s;
+  /* Added max-width to keep cards uniform */
+  max-width: 380px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .clock-card canvas {

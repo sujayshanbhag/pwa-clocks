@@ -3,15 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Station Command Center</title>
+    <title>Clock</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="manifest" href="manifest.json" />
   </head>
   <body>
     <nav class="main-nav">
       <div class="nav-container">
-        <button class="tab-link active" data-tab="clocks">GLOBAL CLOCKS</button>
-        <button class="tab-link" data-tab="stopwatch">PRECISION TIMER</button>
+        <button class="tab-link active" data-tab="clocks">
+          WORLDWIDE CLOCKS
+        </button>
+        <button class="tab-link" data-tab="stopwatch">TIMER</button>
       </div>
     </nav>
 
@@ -41,6 +43,15 @@
           </div>
           <div class="clock-card">
             <canvas id="australia" width="350" height="350"></canvas>
+            <div class="loading-text">Syncing...</div>
+          </div>
+          <div class="clock-card">
+            <canvas id="singapore" width="350" height="350"></canvas>
+            <div class="loading-text">Syncing...</div>
+          </div>
+
+          <div class="clock-card">
+            <canvas id="dubai" width="350" height="350"></canvas>
             <div class="loading-text">Syncing...</div>
           </div>
         </div>
