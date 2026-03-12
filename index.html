@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Global Station Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1 id="status-heading">GLOBAL STATIONS</h1>
+    <p id="accuracy-note" style="display:none; color: #ff3f34; margin-bottom: 20px; font-weight: bold;">
+        ⚠️ Time adjusted from cache (Offline Mode)
+    </p>
+
+    <div class="clock-grid">
+        <div class="clock-card"><canvas id="india" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
+        <div class="clock-card"><canvas id="usa" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
+        <div class="clock-card"><canvas id="uk" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
+        <div class="clock-card"><canvas id="france" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
+        <div class="clock-card"><canvas id="japan" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
+        <div class="clock-card"><canvas id="australia" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
+    </div>
+
+    <script src="clock.js"></script>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(() => console.log("SW Active"))
+                .catch(err => console.error("SW Fail", err));
+        }
+    </script>
+</body>
+</html>
