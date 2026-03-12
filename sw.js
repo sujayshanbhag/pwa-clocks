@@ -82,3 +82,20 @@ self.addEventListener("message", (event) => {
     }, delay);
   }
 });
+self.addEventListener("message", (event) => {
+  if (event.data.action === "SET_TIMER") {
+    const delay = event.data.delay;
+    const triggerTime = Date.now() + delay;
+
+    self.registration.showNotification("TIME's UP COMPLETE", {
+      body: "Your countdown has reached zero.",
+      icon: "/icon-192.png",
+      tag: "timer-notification",
+      vibrate: [500, 110, 500],
+      renotify: true,
+      requireInteraction: true,
+      silent: false,
+      showTrigger: new TimestampTrigger(triggerTime),
+    });
+  }
+});
