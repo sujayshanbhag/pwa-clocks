@@ -1,34 +1,124 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Global Station Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Station Command Center</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+  </head>
+  <body>
+    <nav class="main-nav">
+      <div class="nav-container">
+        <button class="tab-link active" data-tab="clocks">GLOBAL CLOCKS</button>
+        <button class="tab-link" data-tab="stopwatch">PRECISION TIMER</button>
+      </div>
+    </nav>
 
-    <h1 id="status-heading">GLOBAL STATIONS</h1>
-    <p id="accuracy-note" style="display:none; color: #ff3f34; margin-bottom: 20px; font-weight: bold;">
-        ⚠️ Time adjusted from cache (Offline Mode)
-    </p>
+    <main class="content-wrapper">
+      <section id="clocks" class="tab-pane active">
+        <h1 id="status-heading">GLOBAL STATIONS</h1>
+        <div class="clock-grid">
+          <div class="clock-card">
+            <canvas id="india" width="350" height="350"></canvas>
+            <div class="loading-text">Syncing...</div>
+          </div>
+          <div class="clock-card">
+            <canvas id="usa" width="350" height="350"></canvas>
+            <div class="loading-text">Syncing...</div>
+          </div>
+          <div class="clock-card">
+            <canvas id="uk" width="350" height="350"></canvas>
+            <div class="loading-text">Syncing...</div>
+          </div>
+          <div class="clock-card">
+            <canvas id="france" width="350" height="350"></canvas>
+            <div class="loading-text">Syncing...</div>
+          </div>
+          <div class="clock-card">
+            <canvas id="japan" width="350" height="350"></canvas>
+            <div class="loading-text">Syncing...</div>
+          </div>
+          <div class="clock-card">
+            <canvas id="australia" width="350" height="350"></canvas>
+            <div class="loading-text">Syncing...</div>
+          </div>
+        </div>
+      </section>
 
-    <div class="clock-grid">
-        <div class="clock-card"><canvas id="india" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
-        <div class="clock-card"><canvas id="usa" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
-        <div class="clock-card"><canvas id="uk" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
-        <div class="clock-card"><canvas id="france" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
-        <div class="clock-card"><canvas id="japan" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
-        <div class="clock-card"><canvas id="australia" width="350" height="350"></canvas><div class="loading-text">Syncing...</div></div>
-    </div>
+      <section id="stopwatch" class="tab-pane">
+        <div class="timer-card">
+          <div class="analog-timer-ui">
+            <canvas id="timerCanvas" width="400" height="400"></canvas>
+            <div class="timer-overlay">
+              <span id="digitalTimer">00:00:00</span>
+            </div>
+          </div>
+
+          <div class="timer-controls">
+            <div class="dial-selector">
+              <div class="dial-col">
+                <label>HH</label>
+                <input type="number" id="hDial" value="0" min="0" max="23" />
+              </div>
+              <div class="dial-col">
+                <label>MM</label>
+                <input type="number" id="mDial" value="0" min="0" max="59" />
+              </div>
+              <div class="dial-col">
+                <label>SS</label>
+                <input type="number" id="sDial" value="0" min="0" max="59" />
+              </div>
+            </div>
+
+            <div class="button-group">
+              <button
+                id="startBtn"
+                class="btn btn-primary"
+                onclick="startTimer()"
+              >
+                START MISSION
+              </button>
+              <button class="btn btn-secondary" onclick="resetTimer()">
+                RESET
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <script src="clock.js"></script>
     <script src="app.js"></script>
+    <script src="stopwatch.js"></script>
+
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js')
-                .then(() => console.log("SW Active"))
-                .catch(err => console.error("SW Fail", err));
-        }
+      // Tab logic that doesn't interfere with background ticking
+      document.querySelectorAll(".tab-link").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = button.getAttribute("data-tab");
+
+          document
+            .querySelectorAll(".tab-link")
+            .forEach((btn) => btn.classList.remove("active"));
+          document
+            .querySelectorAll(".tab-pane")
+            .forEach((pane) => pane.classList.remove("active"));
+
+          button.classList.add("active");
+          document.getElementById(target).classList.add("active");
+        });
+      });
+
+      // Safe Initialization
+      window.addEventListener("DOMContentLoaded", () => {
+        if (typeof initClocks === "function") initClocks();
+        if (typeof initStopwatch === "function") initStopwatch();
+      });
+
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./sw.js");
+      }
     </script>
-</body>
+  </body>
 </html>
